@@ -1,4 +1,4 @@
-# Faster-Zero-Trust-Anonymous-Payments-FZAP-
+# Faster Zero-Trust Anonymous Payments FZAP
 
 ## Abstraction
 Faster Zero-Trust Anonymous Payments (FZAP) is a privacy-preserving on-chain settlement protocol for stablecoin payments. It enables buyers to pay merchants using stablecoins while preventing third-party observers from reliably linking who paid, what was purchased and when a specific merchant was settled.
