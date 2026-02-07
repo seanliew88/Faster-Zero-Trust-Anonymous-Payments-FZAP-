@@ -8,8 +8,8 @@ A typical stablecoin transfer reveals the Buyer’s address, the Merchant’s ad
 This protocol enables Buyers to perform transaction via a third party, the Operator, completely anonymously. Instead of using traditional mixing methods, which have a high time cost, are easily identifiable when are used, require trust in the Operator, and also still link Buyer and Merchant, our FZAP protocol instead opts to leverage high Operator liquidity to "break" the blockchain link between Buyer and Merchant, ensuring that there is never a direct blockchain link between them, and that the funds deposited by the Buyer can be obfuscated by the Operator to anonymously settle future FZAP transactions.
 The protocol separates payments, settlement, and fund management into distinct layers. Instead of routing funds directly from Buyers to merchants, all payments flow through a Operator that acts as a provider of fresh liquidity that is untraceable back to the original Buyer.
 
-## System Architecture
-<img width="1185" height="588" alt="image" src="https://github.com/user-attachments/assets/c8a25c25-9aec-448f-8ec6-2a24fb43d78d" />
+## Protocol Architecture
+<img width="805" height="400" alt="image" src="https://github.com/user-attachments/assets/be2d2feb-e5d2-4b82-aec5-139caad47196" />
 
 ### 1. Initalisation of Protocol
 Buyers provide the Merchant address and the payment amount they wish to transfer using the FZAP protocol. The Operator creates an ephemeral "input" wallet using a unique ID, which is calculated using a quantum random number generator, and a series of smart contracts which will settle the payment using funds from anonymous ephemeral "output" wallets controlled by the Operator upon Buyer deposit into the input wallet.
