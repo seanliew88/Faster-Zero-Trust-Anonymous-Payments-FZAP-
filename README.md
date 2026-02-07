@@ -9,7 +9,7 @@ This protocol brings settlement-layer privacy primitives to blockchains without 
 The protocol separates payments, settlement, and liquidity management into distinct layers. Instead of routing funds directly from buyers to merchants, all payments flow through a Settlement Router (Name TBC) that acts as an on-chain enforcement and accounting layer.
 
 ## System Architecture
-<img width="803" height="452" alt="image" src="https://github.com/user-attachments/assets/6aaa7d4b-084d-4a75-aaee-16e5b2f01146" />
+<img width="1185" height="588" alt="image" src="https://github.com/user-attachments/assets/c8a25c25-9aec-448f-8ec6-2a24fb43d78d" />
 
 ### 1. Buyer Payments
 Buyers pay using ephemeral wallets where each payment includes a one-time identifier to prevent replay. Funds are then deposited into the Settlement Router, not directly to the merchant. 
