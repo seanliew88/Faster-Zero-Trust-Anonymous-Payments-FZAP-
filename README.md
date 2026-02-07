@@ -12,27 +12,30 @@ The protocol separates payments, settlement, and liquidity management into disti
 <img width="1185" height="588" alt="image" src="https://github.com/user-attachments/assets/c8a25c25-9aec-448f-8ec6-2a24fb43d78d" />
 
 ### 1. Buyer Payments
-Buyers pay using ephemeral wallets where each payment includes a one-time identifier to prevent replay. Funds are then deposited into the Settlement Router, not directly to the merchant. 
+Buyers pay using ephemeral wallets where each payment includes a one-time identifier to prevent replay. Funds are then deposited into the Settlement Router, not directly to the merchant. A unique ID is created for each temporary wallet using a quantum random number generator. 
 
 ### 2. Internal Accounting
 The Settlement Router maintains an internal ledger that credits merchant balances using commitment identifiers and aggregates multiple buyer deposits. It is important to note that deposits do not trigger swaps nor do they correspond to one-to-one with settlements.
 
-### 3. Privacy-Preserving Settlement TIming
+### 3. Privacy-Preserving Settlement Timing
 Each deposit specifies a randomised settlement unlock time within a bounded window (5-10 minutes). The settlement timing is unpredictable to observers and withdawals cannot occur immediately after a payment. Merchants are paid according to protocol-enforced settlement policy, not buyer actions.
 
 ### 4. Multi-Hop Conversion
-The pooled stablecoins from buyers' payments are then pooled and converted across low-volatility assets. These conversions are batched, decoupled from individual payments and most importantly non-deterministic. This ensures that asset hops add uncertainty without creating traceable routing graphs.
+The pooled stablecoins from buyers' payments are then pooled and converted across low-volatility assets. Using Flare's Time Series Oracle, we obtained data on prices for stablecoins over 30 day periods to determine momentum signals, spread and volatility - converting this to a correlation matrix. These conversions are batched, decoupled from individual payments and most importantly non-deterministic. A quantum approximate optimiser algorithm (QAOA) is applied to ensure the optimal path is taken through the graph (where nodes represent currencies, edges are  calculated by a weighting algorithm) - with the aim of minimising net loss in USDT. This ensures that asset hops add uncertainty without creating traceable routing graphs.
 
 ### 5. Merchant Settlement
-Merchants withdraw funds only after settlement conditions are met. Withdrawals are paid in the original currency and are drawn from the router's settlement buffer. At no point is a merchant paid directly from a buyer or a per-payment path.
+Merchants withdraw funds only after settlement conditions are met. Withdrawals are paid in the original currency and are drawn from the router's settlement buffer. Flare's Data Collector is used to ensure that the payee has received the transaction. At no point is a merchant paid directly from a buyer or a per-payment path.
 
 ## Privacy Model
 Privacy is achieved through structural decoupling of payments, settlement, and liquidity management which prevents on-chain observers from reliably linking buyers to merchants or correlating deposits with withdrawals. Liquidity transformations, including optional multi-hop conversions across low-volatility assets, occur asynchronously at the liquidity layer and are explicitly decoupled from user actions. These operations are batched, non-deterministic, and independent of payment or settlement events, ensuring they do not create traceable routing graphs. As a result, privacy emerges as a by-product of aggregation, timing uncertainty, and liquidity abstraction, rather than from obfuscation or anonymity guarantees.
 
 ## Verification & Correctness 
-The protocol ensures that each payment identifier can only be used once, that merchant withdrawals cannot exceed credited balances, and that settlement timing rules are strictly enforced by on-chain timestamps. All transfers occur atomically, and no privileged role can bypass accounting or settlement constraints.
+The Flare Data protocol ensures that each payment identifier can only be used once, that merchant withdrawals cannot exceed credited balances, and that settlement timing rules are strictly enforced by on-chain timestamps. All transfers occur atomically, and no privileged role can bypass accounting or settlement constraints.
 
 The contract is immutable and permissionless, with no owner or administrator keys. This ensures that no single party can censor withdrawals, forge balances, or redirect funds. All users interact with the same publicly verifiable rules, and any deviation from protocol logic is cryptographically impossible.
+
+## Plasma usage 
+Plasma is used an omnibus pool host. When a position lands on Plasma, it sits in this native pool. Ehpemeral wallets are created on Plasma, moving USDT into them and burning them afterwards - this costs nothing in gas! 
 
 ## Legal Positioning
 This protocol is not a mixer and is not designed to anonymize funds. Its purpose is to enable confidential commerce . All withdrawals are tied to explicit merchant commitments and users cannot withdraw to arbitrary addresses or sever provenance from funds. The protocol minimises unnecessary data exposure while preserving verifiable correctness, aligning more closely with established financial privacy norms than with obfuscation-based systems.
