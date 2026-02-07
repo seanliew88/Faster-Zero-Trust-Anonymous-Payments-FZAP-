@@ -10,6 +10,7 @@ The protocol separates payments, settlement, and liquidity management into disti
 
 ## System Architecture
 <img width="803" height="452" alt="image" src="https://github.com/user-attachments/assets/6aaa7d4b-084d-4a75-aaee-16e5b2f01146" />
+
 ### 1. Buyer Payments
 Buyers pay using ephemeral wallets where each payment includes a one-time identifier to prevent replay. Funds are then deposited into the Settlement Router, not directly to the merchant. 
 
