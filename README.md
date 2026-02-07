@@ -11,6 +11,8 @@ The protocol separates payments, settlement, and fund management into distinct l
 ## Protocol Architecture
 <img width="805" height="400" alt="image" src="https://github.com/user-attachments/assets/be2d2feb-e5d2-4b82-aec5-139caad47196" />
 
+Note that the Payees **are not** the ones associated with the Payers to the left. They are future Payee requests created by future Payers.
+
 ### 1. Initalisation of Protocol
 Buyers provide the Merchant address and the payment amount they wish to transfer using the FZAP protocol. The Operator creates an ephemeral "input" wallet using a unique ID, which is calculated using a quantum random number generator, and a series of smart contracts which will settle the payment using funds from anonymous ephemeral "output" wallets controlled by the Operator upon Buyer deposit into the input wallet.
 
